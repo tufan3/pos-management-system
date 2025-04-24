@@ -88,7 +88,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="image">Product Image</label>
-                        <input type="file" class="form-control-file" id="image" name="image">
+                        <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
                         @if ($product->image)
                             <div class="mt-2">
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="Current Image"

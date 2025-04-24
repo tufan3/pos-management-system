@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductVariation;
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -169,7 +171,16 @@ class ProductController extends Controller
         }
 
         $product->variations()->delete();
+
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+
+        $emptyOrders = Order::whereDoesntHave('items')->get();
+        foreach ($emptyOrders as $order) {
+            $order->delete();
+        }
+
+        return redirect()->route('products.index')->with('success', 'Product and empty orders deleted.');
     }
+
+
 }
